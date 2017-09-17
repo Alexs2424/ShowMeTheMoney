@@ -12,15 +12,15 @@ import ARKit
 import WebKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
     
     let API_KEY = "ba3ee3150714a055100f2aacbb61fab3"
-
+    
     var nodesAdded = false
     var lastZPos: Float = 0.0
     var titleLabel: UILabel = UILabel()
-//    var billSwitch: UIButton = UIButton()
+    //    var billSwitch: UIButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,28 +29,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-//        sceneView.showsStatistics = true
+        //        sceneView.showsStatistics = true
         
-
+        
         // Create a new scene
-//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-//
-//        self.sceneView.scene = scene
-//
-//        // Set the scene to the view
-//        sceneView.scene = scene
+        //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        //
+        //        self.sceneView.scene = scene
+        //
+        //        // Set the scene to the view
+        //        sceneView.scene = scene
         
         //Creating the title label
         titleLabel = UILabel(frame: CGRect(x: self.view.frame.midX - 150, y: 30, width: 300, height: 20))
         
         titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20.0)
-        titleLabel.text = "Select Action"
+        titleLabel.text = "Please Select Action"
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         
         view.addSubview(titleLabel)
         
-    
+        
         //Creating the balance button
         let balanceButton = UIButton(type: .custom)
         //self.view.frame.maxY
@@ -62,17 +62,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         view.addSubview(balanceButton)
         
         //tbillSwitcher
-//        billSwitch = UIButton(type: .custom)
-//        billSwitch.frame = CGRect(x: self.view.frame.maxX - 135, y: self.view.frame.minY + 80, width: 120, height: 50)
-//        billSwitch.setImage(UIImage(named: "NessBux1"), for: .normal)
-//
-//        view.addSubview(billSwitch)
+        //        billSwitch = UIButton(type: .custom)
+        //        billSwitch.frame = CGRect(x: self.view.frame.maxX - 135, y: self.view.frame.minY + 80, width: 120, height: 50)
+        //        billSwitch.setImage(UIImage(named: "NessBux1"), for: .normal)
+        //
+        //        view.addSubview(billSwitch)
         
         
         
         //Creating the purchases button
         let purchasesButton = UIButton(type: .custom)
-    
+        
         purchasesButton.frame = CGRect(x: 112, y: self.view.frame.maxY - 82, width: 68, height: 68)
         purchasesButton.setImage(UIImage(named: "Purchases"), for: .normal)
         purchasesButton.setImage(UIImage(named: "Purchases Selected"), for: .selected)
@@ -99,10 +99,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.removeChildrenNodes()
             nodesAdded = false
             self.titleLabel.text = "Please Select Action"
-//            self.billSwitch.isHidden = true
+            //            self.billSwitch.isHidden = true
         } else {
             nodesAdded = true
-//            self.billSwitch.isHidden = false
+            self.titleLabel.text = "Account Balance"
+            //            self.billSwitch.isHidden = false
             //        print("---------- SHOW BALANCE ----------")
             //Creating the table
             let rectGeo = SCNBox(width: 0.3, height: 0.75, length: 0.05, chamferRadius: 0.0) //length was 0.6, height was 0.06
@@ -127,7 +128,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 
             })
         }
-
+        
     }
     
     @objc
@@ -136,11 +137,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             //remove all of them
             self.removeChildrenNodes()
             nodesAdded = false
-            self.titleLabel.text = "Select Action"
+            self.titleLabel.text = "Please Select Action"
         } else {
             nodesAdded = true
             
-//            self.billSwitch.isHidden = true
+            //            self.billSwitch.isHidden = true
             
             self.titleLabel.text = "Last Two Purchases"
             
@@ -162,18 +163,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 //grab output
                 let amountOfPurchase1 = output[3]
                 let amountOfPurchase2 = output[4]
-
+                
                 print("amt1 = \(amountOfPurchase1) \namt2 = \(amountOfPurchase2)")
-
+                
                 
                 self.addMoneyForAmount(amt: amountOfPurchase1, title: "")
                 self.addMoneyForAmount(amt: amountOfPurchase2, title: "2P")
-//                self.addMoneyForAmount(amt: amountOfPurchase3, title: "2P")
+                //                self.addMoneyForAmount(amt: amountOfPurchase3, title: "2P")
                 //loop throught the purchases and then output the results
                 
                 //show the last two purchases
             })
-
+            
         }
         
         
@@ -185,11 +186,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             //remove all of them
             self.removeChildrenNodes()
             nodesAdded = false
-            self.titleLabel.text = "Select Action"
+            self.titleLabel.text = "Please Select Action"
         } else {
             nodesAdded = true
             
-//            billSwitch.isHidden = true
+            //            billSwitch.isHidden = true
             
             self.titleLabel.text = "Deposits vs. Withdrawls"
             
@@ -218,7 +219,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 self.addMoneyForAmount(amt: totalDepositAmt, title: "")
             })
         }
-    
+        
         
         
         
@@ -237,15 +238,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         var highestYPos:Float = 0.00
         var zPos:Float = -0.25
         if title == "2P" {
-
+            
             zPos += lastZPos
-
+            
             print("zPos with 2P: \(zPos)")
         }
         var yPos = -0.070
         var numDollar = 0
         for dollar in stride(from: 0, to: dollars, by: 1) {
-    
+            
             //z & y position to vary
             if dollar % 200 == 0 {
                 numDollar += 200
@@ -254,7 +255,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     zPos = -0.25
                     if title == "2P" {
                         zPos += -0.15
-//                        zPos += -0.15
+                        //                        zPos += -0.15
                     }
                     numDollar = 0
                 }
@@ -262,8 +263,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             } else {
                 yPos = -0.070 + (Double((dollar - numDollar)) * 0.00130) //was 0.0130
             }
-        
-//            let yPos = -0.070 + (Double(dollar) * 0.0130)
+            
+            //            let yPos = -0.070 + (Double(dollar) * 0.0130)
             
             //end of stack or last dollar
             if ((dollar % 200 == 0) && (dollar != 0)) || (dollar == dollars - 1)  {
@@ -279,13 +280,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 
                 //zPos will be shifted -0.15
                 lastZPos = zPos
-
+                
             } else {
                 let moneyGeo = SCNBox(width: 0.0267, height: 0.06, length: 0.0009, chamferRadius: 0.0) //width was 0.05 //not height  //length was 0.01
                 //width 0.1     height 0.06
                 moneyGeo.firstMaterial?.diffuse.contents = UIColor(red:0.35, green:0.53, blue:0.46, alpha:1.00) //UIColor(red: 0.20, green: 0.26, blue: 0.16, alpha: 1.0)
                 let moneyNode = SCNNode(geometry: moneyGeo)
-    
+                
                 moneyNode.eulerAngles.x = -.pi / 2
                 moneyNode.eulerAngles.y = -.pi / 2
                 
@@ -297,7 +298,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             highestYPos = Float(yPos)
         }
         
-
+        
         //eventually we will add the purchase title over top the cash
     }
     
@@ -373,64 +374,64 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             highestYPos = Float(yPos)
         }
     }
-//
-//    func add100MoneyForAmount(amt: Double) {
-//        //figuring out how much cash to stack
-//        var dollars = Int(amt)
-//        let purchaseCashIndicator:Double = Double(dollars) + 0.5
-//
-//        if (Double(dollars) >= purchaseCashIndicator) {
-//            dollars += 1
-//        }
-//        var highestYPos:Float = 0.00
-//        var zPos:Float = -0.25
-//
-//        var yPos = -0.070
-//        var numDollar = 0
-//
-//        let amt100bills = amt / 100
-//
-//
-//
-//        for dollar in stride(from: 0, to: amt100bills, by: 1) {
-//
-//            let moneyScene = SCNScene(named: "Nessie100", inDirectory: "art.scnassets")
-//            let moneyNode = moneyScene!.rootNode.childNode(withName: "SketchUp", recursively: true)
-//            moneyNode?.scale = SCNVector3(0.01, 0.01, 0.01)
-//            //y: was -0.070
-//            moneyNode?.simdWorldPosition = simd_float3(x: 0.0 - 0.03, y: Float(yPos), z: Float(zPos + 0.014)) //was -0.5 //z was -0.35
-//            sceneView.scene.rootNode.addChildNode(moneyNode!)
-//            zPos -= 0.05 //was 0.125
-//            yPos = -0.070
-//
-////            yPos = -0.070 + (Double((dollar - amt100bills)) * 0.00130) //was 0.0130
-//
-////            //z & y position to vary
-////            if dollar % 200 == 0 {
-////                numDollar += 200
-////
-////                if dollar == 0 {
-////                    zPos = -0.25
-////                    numDollar = 0
-////                }
-////
-////            } else {
-////                yPos = -0.070 + (Double((dollar)) * 0.00130) //was 0.0130
-////            }
-////
-////            //            let yPos = -0.070 + (Double(dollar) * 0.0130)
-//
-//            //end of stack or last dollar
-//
-//        }
-//    }
+    //
+    //    func add100MoneyForAmount(amt: Double) {
+    //        //figuring out how much cash to stack
+    //        var dollars = Int(amt)
+    //        let purchaseCashIndicator:Double = Double(dollars) + 0.5
+    //
+    //        if (Double(dollars) >= purchaseCashIndicator) {
+    //            dollars += 1
+    //        }
+    //        var highestYPos:Float = 0.00
+    //        var zPos:Float = -0.25
+    //
+    //        var yPos = -0.070
+    //        var numDollar = 0
+    //
+    //        let amt100bills = amt / 100
+    //
+    //
+    //
+    //        for dollar in stride(from: 0, to: amt100bills, by: 1) {
+    //
+    //            let moneyScene = SCNScene(named: "Nessie100", inDirectory: "art.scnassets")
+    //            let moneyNode = moneyScene!.rootNode.childNode(withName: "SketchUp", recursively: true)
+    //            moneyNode?.scale = SCNVector3(0.01, 0.01, 0.01)
+    //            //y: was -0.070
+    //            moneyNode?.simdWorldPosition = simd_float3(x: 0.0 - 0.03, y: Float(yPos), z: Float(zPos + 0.014)) //was -0.5 //z was -0.35
+    //            sceneView.scene.rootNode.addChildNode(moneyNode!)
+    //            zPos -= 0.05 //was 0.125
+    //            yPos = -0.070
+    //
+    ////            yPos = -0.070 + (Double((dollar - amt100bills)) * 0.00130) //was 0.0130
+    //
+    ////            //z & y position to vary
+    ////            if dollar % 200 == 0 {
+    ////                numDollar += 200
+    ////
+    ////                if dollar == 0 {
+    ////                    zPos = -0.25
+    ////                    numDollar = 0
+    ////                }
+    ////
+    ////            } else {
+    ////                yPos = -0.070 + (Double((dollar)) * 0.00130) //was 0.0130
+    ////            }
+    ////
+    ////            //            let yPos = -0.070 + (Double(dollar) * 0.0130)
+    //
+    //            //end of stack or last dollar
+    //
+    //        }
+    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
+        
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -446,17 +447,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
+    /*
+     // Override to create and configure nodes for anchors added to the view's session.
+     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+     let node = SCNNode()
      
-        return node
-    }
-*/
+     return node
+     }
+     */
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -610,3 +611,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 }
+
